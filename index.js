@@ -1,31 +1,35 @@
 import express from "express";
-import cors from 'cors'
+import mongoose from "mongoose";
+import cors from "cors";
+
+import userRouter from "./routes/userRoutes.js";
+import productRouter from "./routes/productRoutes.js";
+import orderRouter from "./routes/orderRoutes.js";
+import dotenv from "dotenv";
+dotenv.config();
+
 const app = express();
-app.listen(8080, () => {
-  console.log("server started");
-});
-
 app.use(cors());
+app.use(express.json());
+const MONGODB_URI = process.env.MONGODB_URI;
 
-app.get("/", (req, res) => {
-  return res.send("Hello World");
-});
-app.get("/greet", (req, res) => {
-  res.send("Greetings");
-});
-app.get("/name", (req, res) => {
-  res.send("Umadevi");
-});
-app.get("/weather", (req, res) => {
-  res.send("35 degrees");
-});
-app.get("/products", (req, res) => {
-  const products = [
-    { name: "Product 1", price: 34 },
-    { name: "Product 2", price: 64 },
-    { name: "Product 3", price: 45 },
-  ];
-  res.json(products);
-  
-});
+app.use("/users", userRouter);
 
+app.use("/products", productRouter);
+app.use("/orders", orderRouter);
+
+/*app.listen(8080, () => {
+  mongoose.connect(`${MONGODB_URI}`);
+  console.log("Server Started");
+});*/
+
+mongoose
+  .connect(MONGODB_URI)
+  .then(() => {
+    app.listen(8080, () => {
+      console.log("Server Started on port 8080");
+    });
+  })
+  .catch((error) => {
+    console.log(error);
+  });
