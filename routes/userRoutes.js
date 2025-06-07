@@ -1,4 +1,4 @@
-/*import express from "express";
+import express from "express";
 import userModel from "../models/userModel.js";
 import bcrypt from "bcryptjs";
 
@@ -41,9 +41,9 @@ userRouter.get("/:id/name", async (req, res) => {
   return res.json(result);
 });
 
-export default userRouter;*/
+export default userRouter;
 
-import express from "express";
+/*import express from "express";
 import userModel from "../models/userModel.js";
 import bcrypt from "bcryptjs";
 const userRouter = express.Router();
@@ -75,4 +75,4 @@ userRouter.post("/login", async (req, res) => {
   return res.json({ user: result, token: token });
 });
 
-export default userRouter;
+export default userRouter;*/
